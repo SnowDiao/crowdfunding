@@ -39,6 +39,7 @@
 <body>
 <h2>测试环境页面</h2>
 <a href="test/ssm.html">测试SSM环境整合</a><br>
+<a href="admin/to/login/page.html">到登录界面-admin/to/login/page.html->admin-login.jsp</a><br>
 <button id="btn3">Send [5,8,12] three</button><br>
 <button id="btn5">点我弹框</button><br>
 </body>

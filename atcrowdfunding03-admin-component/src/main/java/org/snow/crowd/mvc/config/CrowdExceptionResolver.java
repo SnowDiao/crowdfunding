@@ -2,6 +2,9 @@ package org.snow.crowd.mvc.config;
 
 import com.google.gson.Gson;
 import org.snow.crowd.constant.CrowdConstant;
+import org.snow.crowd.exception.LoginAcctAlreadyInUseException;
+import org.snow.crowd.exception.LoginAcctAlreadyInUseForUpdateException;
+import org.snow.crowd.exception.LoginFailedException;
 import org.snow.crowd.util.CrowdUtil;
 import org.snow.crowd.util.ResultEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -14,23 +17,40 @@ import java.io.IOException;
 
 // 表示当前类是一个处理异常的类
 @ControllerAdvice
+
+
 public class CrowdExceptionResolver {
+
+    @ExceptionHandler(value = LoginAcctAlreadyInUseForUpdateException.class)
+    public ModelAndView resolveLoginAcctAlreadyInUseForUpdateException(LoginAcctAlreadyInUseForUpdateException exception, HttpServletRequest request, HttpServletResponse response) {
+        String viewName = "system-error";
+        //返回
+        return commonResolve(viewName, exception, request, response);
+    }
+    @ExceptionHandler(value = LoginAcctAlreadyInUseException.class)
+    public ModelAndView resolveLoginAcctAlreadyInUseException(LoginAcctAlreadyInUseException exception, HttpServletRequest request, HttpServletResponse response) {
+        String viewName = "admin-add";
+        //返回
+        return commonResolve(viewName, exception, request, response);
+    }
     //将一个具体异常类型与一个方法关联起来
-    @ExceptionHandler(value = NullPointerException.class)
-    public ModelAndView resolveLoginFailedException(NullPointerException exception, HttpServletRequest request, HttpServletResponse response){
-        String viewName = "system-error";
+    @ExceptionHandler(value = LoginFailedException.class)
+    public ModelAndView resolveLoginFailedException(LoginFailedException exception, HttpServletRequest request, HttpServletResponse response){
+        String viewName = "admin-login";
         return commonResolve(viewName, exception, request, response);
 
     }
-
+    // 其他类型的异常交给这里处理
     @ExceptionHandler(value = Exception.class)
-    public ModelAndView resolveException(Exception exception,
-                                         HttpServletRequest request,
-                                         HttpServletResponse response){
+    public ModelAndView resolveException(Exception exception, HttpServletRequest request, HttpServletResponse response){
         String viewName = "system-error";
         return commonResolve(viewName, exception, request, response);
     }
 
+
+
+
+    // 封装处理异常的方法
     private ModelAndView commonResolve(String viewName, Exception exception, HttpServletRequest request, HttpServletResponse response){
         //获取异常消息
         String message = exception.getMessage();

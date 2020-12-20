@@ -40,9 +40,12 @@ public class CrowdTest {
     }
     @Test
     public void testInsertAdmin(){
-        Admin admin = new Admin(null,"115","123","杰伦","123@qq.com",null);
-        int count = adminMapper.insert(admin);
-        System.out.println("受到影响的行数:" + count);
+        for(int i = 1;i <= 226;i++){
+            Admin admin = new Admin(null,"jack"+i,"123","杰克"+i,"123@qq.com",null);
+            int count = adminMapper.insert(admin);
+            System.out.println("受到影响的行数:" + count);
+        }
+
     }
 
     @Test

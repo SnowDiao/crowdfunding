@@ -48,7 +48,7 @@
     </h2>
     <%--
         requestScope对应的是存放request域数据的Map
-        requestScope.exception == request.getAttribute("exception")
+        requestScope.exception == request.getAttribute("CrowdConstant.ATTR_NAME_EXCEPTION")
         requestScope.exception.message == exception.getMessage（）
     --%>
     <h3 align="center">${requestScope.exception.message }</h3>
